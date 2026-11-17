@@ -78,6 +78,27 @@ nav .links a:hover::after,nav .links a.on::after{transform:scaleX(1);transform-o
 @media(max-width:720px){.hero .meta{grid-template-columns:1fr;gap:16px}.hero .meta .r{justify-self:start;text-align:left}}
 
 /* essential question */
+/* intro video */
+.watch{display:inline-flex;align-items:center;gap:10px;color:#fff;font-weight:500;font-size:15px;margin-bottom:10px;padding:10px 16px 10px 10px;border-radius:99px;background:#ffffff1f;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);transition:background .4s}
+.watch:hover{background:#ffffff38}
+.watch .pl{width:28px;height:28px;border-radius:50%;background:var(--accent);display:grid;place-items:center;font-size:10px;padding-left:2px}
+.vid{background:var(--dark);color:var(--light);min-height:100svh;display:flex;align-items:center;padding:96px 0 64px}
+.vid .w{width:100%}
+.vhead{display:flex;justify-content:space-between;margin-bottom:20px}
+.vid .label{color:#ffffff80}
+.player{position:relative;aspect-ratio:16/9;max-height:calc(100svh - 200px);margin:0 auto;border-radius:14px;overflow:hidden;background:#000;cursor:pointer;transform:scale(.94);opacity:.6;transition:transform 1.2s var(--ease),opacity 1.2s var(--ease)}
+.player.in{transform:none;opacity:1}
+.player video{width:100%;height:100%;object-fit:contain;display:block}
+.player .big{position:absolute;inset:0;margin:auto;width:96px;height:96px;border-radius:50%;border:0;background:var(--accent);color:#fff;font-size:26px;cursor:pointer;display:grid;place-items:center;padding-left:6px;transition:transform .5s var(--ease),opacity .4s;box-shadow:0 20px 60px -10px #e2532b80}
+.player:hover .big{transform:scale(1.08)}
+.player .cap{position:absolute;left:24px;bottom:24px;font-size:15px;color:#fff;text-shadow:0 1px 12px #000a;transition:opacity .4s}
+.player::after{content:"";position:absolute;inset:50% 0 0;background:linear-gradient(transparent,#0009);pointer-events:none;transition:opacity .4s}
+.player .bar{position:absolute;left:0;right:0;bottom:0;height:3px;background:#ffffff26;z-index:2}
+.player .bar i{display:block;height:100%;width:0;background:var(--accent)}
+.player.playing .big,.player.playing .cap,.player.playing::after{opacity:0;pointer-events:none}
+.player.paused .big{opacity:1}
+@media(max-width:720px){.player .big{width:68px;height:68px;font-size:20px}.player{border-radius:10px}}
+
 .eq{height:200vh;position:relative}
 .eq .stick{position:sticky;top:0;height:100svh;display:flex;flex-direction:column;justify-content:center}
 .eq p.q{font-size:clamp(28px,4vw,58px);line-height:1.14;letter-spacing:-.03em;font-weight:400;max-width:24ch;margin-top:28px}
@@ -232,6 +253,7 @@ footer .row{display:flex;justify-content:space-between;flex-wrap:wrap;gap:16px;m
 <nav><div class="w">
   <a class="brand" href="#top">Beyond the Game</a>
   <div class="links">
+    <a href="#watch">Video</a>
     <a href="#question">Question</a>
     <a href="#basics">Basics</a>
     <a href="#research">Research</a>
@@ -251,10 +273,22 @@ footer .row{display:flex;justify-content:space-between;flex-wrap:wrap;gap:16px;m
     <h1><span class="ln"><span>Beyond</span></span><span class="ln"><span>the Game.</span></span></h1>
     <div class="meta">
       <p>College athletes can now get paid. We help them handle that money — so it protects their health and future instead of hurting it.</p>
-      <div class="r">A student-designed nonprofit<br>Senior Health Project · Will &amp; Teddy</div>
+      <div class="r"><a class="watch" href="#watch"><span class="pl">▶</span>Watch our intro · 0:17</a><br>A student-designed nonprofit · Will &amp; Teddy</div>
     </div>
   </div>
 </header>
+
+<section class="vid snap" id="watch" data-name="Intro video">
+  <div class="w">
+    <div class="vhead"><div class="label"><b>00</b>Start here</div><div class="label">17 seconds</div></div>
+    <div class="player" id="player">
+      <video id="video" src="media/intro.mp4#t=0.1" preload="metadata" playsinline></video>
+      <button class="big" id="playBtn" aria-label="Play intro video"><span>▶</span></button>
+      <div class="cap" id="cap">Beyond the Game — the 17-second version</div>
+      <div class="bar"><i id="vbar"></i></div>
+    </div>
+  </div>
+</section>
 
 <section class="eq snap" id="question" data-name="Question">
   <div class="stick"><div class="w">
@@ -489,6 +523,24 @@ footer .row{display:flex;justify-content:space-between;flex-wrap:wrap;gap:16px;m
   });
   const hint = document.getElementById('hint');
   setTimeout(() => { hint.classList.add('show'); setTimeout(() => hint.classList.remove('show'), 4500); }, 3200);
+
+  // intro video
+  const player = document.getElementById('player'), video = document.getElementById('video'), vbar = document.getElementById('vbar');
+  const toggle = () => video.paused ? video.play() : video.pause();
+  player.addEventListener('click', toggle);
+  video.addEventListener('play', () => { player.classList.add('playing'); player.classList.remove('paused'); });
+  video.addEventListener('pause', () => player.classList.add('paused'));
+  video.addEventListener('ended', () => { player.classList.remove('playing', 'paused'); video.currentTime = 0.1; vbar.style.width = '0'; });
+  video.addEventListener('timeupdate', () => { vbar.style.width = (video.currentTime / video.duration * 100 || 0) + '%'; });
+  document.querySelector('.watch').addEventListener('click', e => {
+    e.preventDefault();
+    scrollTo({top: document.getElementById('watch').offsetTop, behavior: reduce ? 'auto' : 'smooth'});
+    video.play();
+  });
+  addEventListener('keydown', e => {
+    if ((e.key === 'Enter' || e.key === ' ') && player.getBoundingClientRect().top < innerHeight * .6 && player.getBoundingClientRect().bottom > innerHeight * .4) { e.preventDefault(); toggle(); }
+  });
+  new IntersectionObserver(([e]) => { if (e.isIntersecting) player.classList.add('in'); else if (!video.paused) video.pause(); }, {threshold: .3}).observe(player);
 
   // scroll loop
   const pars = [...document.querySelectorAll('.par')];

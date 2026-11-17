@@ -10,17 +10,18 @@ Beyond the Game is a mock nonprofit created by Will and Teddy for our Senior Hea
 
 The website is our final product. It takes a first-time visitor from the problem to our solution:
 
-1. **The question:** our essential question.
-2. **The basics:** what NIL, revenue sharing, and the House settlement mean.
-3. **Research:** what changed for athletes, how much money is involved, and how it affects their health. Each fact is labeled with its source.
-4. **What we found:** our answer to the essential question.
-5. **Mission, vision, and plan for change:** free money workshops, a one-on-one financial coach for every athlete, and mental health check-ins.
-6. **Community connection:** [Operation HOPE](https://operationhope.org/), a real nonprofit that offers free financial education and coaching, and how we would partner with it.
-7. **Works cited:** every source in MLA format.
+1. **Intro video:** a 17-second video that opens the site.
+2. **The question:** our essential question.
+3. **The basics:** what NIL, revenue sharing, and the House settlement mean.
+4. **Research:** what changed for athletes, how much money is involved, and how it affects their health. Each fact is labeled with its source.
+5. **What we found:** our answer to the essential question.
+6. **Mission, vision, and plan for change:** free money workshops, a one-on-one financial coach for every athlete, and mental health check-ins.
+7. **Community connection:** [Operation HOPE](https://operationhope.org/), a real nonprofit that offers free financial education and coaching, and how we would partner with it.
+8. **Works cited:** every source in MLA format.
 
 ## Presenting
 
-Open the site full screen and press **→** to move forward and **←** to go back. Each press moves to the next section, so the site works as our slides for the Shark Tank–style pitch.
+Open the site full screen and press **→** to move forward and **←** to go back. On the video screen, press **Enter** or **Space** to play it. Each arrow press moves to the next section, so the site works as our slides for the Shark Tank–style pitch.
 
 ## How it's built
 
